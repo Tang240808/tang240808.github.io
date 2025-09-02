@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}搜索 - 图书管理系统{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">图书搜索</h1>
+    
+    <!-- 搜索表单 -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('search') }}">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="请输入关键词搜索图书（书名、作者、ISBN或分类）" name="keyword" value="{{ keyword if keyword else '' }}" required>
+                    <button type="submit" class="btn btn-primary">搜索</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- 搜索结果 -->
+    {% if keyword %}
+        <h3 class="mb-3">搜索结果: "{{ keyword }}"</h3>
+        
+        {% if books %}
+            <div class="row">
+                {% for book in books %}
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card">
+                    {% if book.cover_image %}
+                        <img src="{{ url_for('static', filename='covers/' + book.cover_image) }}" alt="{{ book.title }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                        <div class="book-cover">
+                            <i class="bi bi-book"></i> 图书封面
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                                <div class="book-title">{{ book.title }}</div>
+                                <p class="card-text text-muted">作者: {{ book.author }}</p>
+                                {% if book.category %}
+                                    <span class="badge bg-secondary mb-2">{{ book.category }}</span>
+                                {% endif %}
+                                <p class="card-text text-sm">库存: {{ book.stock }} 本</p>
+                                <a href="{{ url_for('book_detail', book_id=book.id) }}" class="btn btn-primary btn-sm w-100">查看详情</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info" role="alert">
+                没有找到与"{{ keyword }}"相关的图书。
+            </div>
+        {% endif %}
+    {% endif %}
+    
+    <!-- 引入图标库 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+{% endblock %}

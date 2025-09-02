@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+
+{% block title %}添加图书 - 图书管理系统{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>添加图书</h1>
+        <a href="{{ url_for('admin_books') }}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left mr-2"></i> 返回图书列表
+        </a>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" action="" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}
+                        
+                        <div class="mb-3">
+                            {{ form.title.label(class="form-label") }}
+                            {% if form.title.errors %}
+                                {{ form.title(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.title.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.title(class="form-control") }}
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form.author.label(class="form-label") }}
+                            {% if form.author.errors %}
+                                {{ form.author(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.author.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.author(class="form-control") }}
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form.publisher.label(class="form-label") }}
+                            {% if form.publisher.errors %}
+                                {{ form.publisher(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.publisher.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.publisher(class="form-control") }}
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form.cover_image.label(class="form-label") }}
+                            {% if form.cover_image.errors %}
+                                {{ form.cover_image(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.cover_image.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.cover_image(class="form-control") }}
+                                <small class="form-text text-muted">支持格式: JPG, JPEG, PNG, GIF (最大16MB)</small>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form.publish_date.label(class="form-label") }}
+                            {% if form.publish_date.errors %}
+                                {{ form.publish_date(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.publish_date.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.publish_date(class="form-control") }}
+                                <small class="form-text text-muted">格式：YYYY-MM-DD</small>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form.isbn.label(class="form-label") }}
+                            {% if form.isbn.errors %}
+                                {{ form.isbn(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.isbn.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.isbn(class="form-control") }}
+                                <small class="form-text text-muted">ISBN号必须唯一</small>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form.category.label(class="form-label") }}
+                            {% if form.category.errors %}
+                                {{ form.category(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.category.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.category(class="form-control") }}
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form.description.label(class="form-label") }}
+                            {% if form.description.errors %}
+                                {{ form.description(class="form-control is-invalid", rows=4) }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.description.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.description(class="form-control", rows=4) }}
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form.stock.label(class="form-label") }}
+                            {% if form.stock.errors %}
+                                {{ form.stock(class="form-control is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.stock.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.stock(class="form-control") }}
+                            {% endif %}
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            {{ form.submit(class="btn btn-primary") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4>帮助信息</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="bi bi-info-circle text-primary mr-2"></i> 带 <span class="text-danger">*</span> 的字段为必填项</li>
+                        <li class="mb-2"><i class="bi bi-info-circle text-primary mr-2"></i> ISBN号必须唯一，不能重复</li>
+                        <li class="mb-2"><i class="bi bi-info-circle text-primary mr-2"></i> 出版日期格式为 YYYY-MM-DD</li>
+                        <li class="mb-2"><i class="bi bi-info-circle text-primary mr-2"></i> 库存数量不能为负数</li>
+                        <li class="mb-2"><i class="bi bi-info-circle text-primary mr-2"></i> 图书添加成功后可以在图书列表中查看和编辑</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 引入图标库 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+{% endblock %}
